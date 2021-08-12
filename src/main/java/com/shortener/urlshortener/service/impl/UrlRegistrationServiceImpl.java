@@ -33,6 +33,7 @@ public class UrlRegistrationServiceImpl implements UrlRegistrationService{
 		urlRegistrationValidator.validate(url, redirectType);
 		// save url
 		
+		
 		// create short key by ID
 		String shortKey = urlShortenerUtil.encode(2589785l);
 //		Long number = urlShortenerUtil.decode(shortKey);
