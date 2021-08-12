@@ -1,9 +1,13 @@
 package com.shortener.urlshortener.response;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 public class AccountResponse {
 
 	private boolean success;
 	private String description;
+	@JsonInclude(Include.NON_NULL)
 	private String password;
 		
 	public AccountResponse() {
