@@ -1,30 +1,48 @@
 package com.shortener.urlshortener.entity;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Account {
 
 	@Id
-	private String accountId;
+	private String id;
+	
 	private String password;
+	
+	@OneToMany(mappedBy="account")
+	private List<RegisteredUrl> registeredUrls;
 		
 	public Account() {
 
 	}
 
 	public Account(String accountId, String password) {
-		this.accountId = accountId;
+		this.id = accountId;
 		this.password = password;
 	}
 	
-	public String getAccountId() {
-		return accountId;
+	
+	public String getId() {
+		return id;
 	}
-	public void setAccountId(String accountId) {
-		this.accountId = accountId;
+
+	public void setId(String id) {
+		this.id = id;
 	}
+
+	public List<RegisteredUrl> getRegisteredUrls() {
+		return registeredUrls;
+	}
+
+	public void setRegisteredUrls(List<RegisteredUrl> registeredUrls) {
+		this.registeredUrls = registeredUrls;
+	}
+
 	public String getPassword() {
 		return password;
 	}

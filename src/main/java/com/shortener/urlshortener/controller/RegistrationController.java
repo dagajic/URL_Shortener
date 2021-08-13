@@ -1,6 +1,7 @@
 package com.shortener.urlshortener.controller;
 
 import java.net.MalformedURLException;
+import java.security.Principal;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -54,11 +55,12 @@ public class RegistrationController {
 	// URLs registration
 	@PostMapping(value = "/register", consumes = "application/json", produces = "application/json")
 	public ResponseEntity<UrlRegistrationResponse> registerUrl(@RequestBody UrlRegistrationRequest request, 
-			HttpServletRequest servletRequest){
+			HttpServletRequest servletRequest, Principal principal){
 		logger.info("URL: {}, redirectType: {}",request.getUrl(), request.getRedirectType());
 		// TODO get account id from header
+
 		String shortKey = urlRegistrationService.registerUrl(request.getUrl(), 
-				request.getRedirectType(), "accountId");
+				request.getRedirectType(), principal.getName());
 		
 		if(!StringUtils.hasText(shortKey)) {
 			return new ResponseEntity<UrlRegistrationResponse>(HttpStatus.INTERNAL_SERVER_ERROR);
