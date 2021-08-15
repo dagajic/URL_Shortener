@@ -31,7 +31,7 @@ import com.shortener.urlshortener.service.UrlRegistrationService;
 import com.shortener.urlshortener.util.UrlTransformerUtil;
 
 @RestController
-//@RequestMapping("/config")
+@RequestMapping("/api")
 public class ConfigurationController {
 
 	private static final Logger logger = LoggerFactory.getLogger(ConfigurationController.class);

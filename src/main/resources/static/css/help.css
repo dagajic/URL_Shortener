@@ -1,0 +1,12 @@
+@charset "UTF-8";
+
+h1{
+  font-weight:500;
+  color:#2C3E50;
+}
+
+h2{
+  font-weight:200;
+  padding-left:30px;
+  color:#808B96;
+}

@@ -32,10 +32,7 @@ public class RedirectController {
 		return ResponseEntity.status(httpStatus).location(URI.create(redirectData.getRedirectUrl())).build();
 	}
 	
-	@GetMapping("/help")
-	public ResponseEntity<String> help() {
-		return new ResponseEntity<String>("help page", HttpStatus.OK);
-	}
+	
 	
 	
 }

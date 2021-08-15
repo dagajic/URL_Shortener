@@ -33,8 +33,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 		.and()
 		.authorizeRequests()
 			.antMatchers("/h2-console/**").permitAll()
-			.antMatchers(HttpMethod.POST, new String[] { "/account"}).permitAll()
-			.antMatchers(HttpMethod.GET, new String[] { "/{shortKey}", "/help"}).permitAll()
+			.antMatchers(HttpMethod.POST, new String[] { "/api/account"}).permitAll()
+			.antMatchers(HttpMethod.GET, new String[] { "/{shortKey}", "/view/help"}).permitAll()
 			.anyRequest().authenticated()
 			.and().httpBasic();
 	}
@@ -42,6 +42,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 		web.ignoring().antMatchers(
+				"/*.ico",
 				"/resources/**", 
 				"/static/**", 
 				"/css/**",
