@@ -26,7 +26,7 @@ public class UrlRegistrationValidatorImpl implements UrlRegistrationValidator{
 				&& HttpStatus.MOVED_PERMANENTLY.value() != redirectType.intValue())) {
 			throw new ValidationException("Invalid optional property redirectType. Accepted types: 301 | 302 (default)");
 		}
-		UrlValidator urlValidator = new UrlValidator();
+		UrlValidator urlValidator = new UrlValidator(new String[] {"http","https"});
 		if(!urlValidator.isValid(url)) {
 			throw new ValidationException("Url is invalid");
 		}

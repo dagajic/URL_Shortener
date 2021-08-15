@@ -11,7 +11,8 @@ public class PasswordEncoderTest implements PasswordEncoder{
 
 	@Override
 	public boolean matches(CharSequence rawPassword, String encodedPassword) {
-		return rawPassword.toString().equals(encodedPassword);
+		boolean isEqual = rawPassword.toString().equals(encodedPassword);
+		return isEqual;
 	}
 
 }

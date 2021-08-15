@@ -1,5 +1,7 @@
 package com.shortener.urlshortener.entity;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -7,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
 @Entity
@@ -24,6 +27,9 @@ public class RegisteredUrl {
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	private Account account;
+	
+	@OneToMany(mappedBy="registeredUrl", fetch = FetchType.LAZY)
+	private List<UrlCall> urlCalls;
 		
 	public RegisteredUrl() {
 
@@ -63,6 +69,10 @@ public class RegisteredUrl {
 	}
 	public void setAccount(Account account) {
 		this.account = account;
+	}
+
+	public List<UrlCall> getUrlCalls() {
+		return urlCalls;
 	}
 	
 	

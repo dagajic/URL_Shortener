@@ -52,7 +52,6 @@ public class UrlRegistrationServiceImpl implements UrlRegistrationService{
 			String shortKey = urlShortenerUtil.encode(savedUrl.getId());
 //			Long number = urlShortenerUtil.decode(shortKey);
 //			logger.info("encoded: {}, decoded: {}", shortKey, number);
-					
 			return shortKey;
 		}
 		

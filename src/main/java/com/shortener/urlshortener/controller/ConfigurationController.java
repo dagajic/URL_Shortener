@@ -2,8 +2,11 @@ package com.shortener.urlshortener.controller;
 
 import java.net.MalformedURLException;
 import java.security.Principal;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,8 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.shortener.urlshortener.request.AccountRequest;
@@ -20,13 +26,15 @@ import com.shortener.urlshortener.request.UrlRegistrationRequest;
 import com.shortener.urlshortener.response.AccountResponse;
 import com.shortener.urlshortener.response.UrlRegistrationResponse;
 import com.shortener.urlshortener.service.AccountCreationService;
+import com.shortener.urlshortener.service.StatisticService;
 import com.shortener.urlshortener.service.UrlRegistrationService;
 import com.shortener.urlshortener.util.UrlTransformerUtil;
 
 @RestController
-public class RegistrationController {
+//@RequestMapping("/config")
+public class ConfigurationController {
 
-	private static final Logger logger = LoggerFactory.getLogger(RegistrationController.class);
+	private static final Logger logger = LoggerFactory.getLogger(ConfigurationController.class);
 	
 	@Autowired
 	private AccountCreationService accountCreationService;
@@ -36,6 +44,9 @@ public class RegistrationController {
 	
 	@Autowired
 	private UrlTransformerUtil iUrlTransformerUtil;
+	
+	@Autowired
+	private StatisticService iStatisticService;
 	
 	// account creation
 	@PostMapping(value = "/account", consumes = "application/json", produces = "application/json")
@@ -57,8 +68,7 @@ public class RegistrationController {
 	public ResponseEntity<UrlRegistrationResponse> registerUrl(@RequestBody UrlRegistrationRequest request, 
 			HttpServletRequest servletRequest, Principal principal){
 		logger.info("URL: {}, redirectType: {}",request.getUrl(), request.getRedirectType());
-		// TODO get account id from header
-
+		// get account id from header		
 		String shortKey = urlRegistrationService.registerUrl(request.getUrl(), 
 				request.getRedirectType(), principal.getName());
 		
@@ -76,4 +86,16 @@ public class RegistrationController {
 		UrlRegistrationResponse response = new UrlRegistrationResponse(shortUrl); 
 		return new ResponseEntity<UrlRegistrationResponse>(response, HttpStatus.CREATED);
 	}
+	
+	@GetMapping("/statistic/{accountId}")
+	public ResponseEntity<Map<String, Long>> statistics(@PathVariable String accountId, Principal principal){
+		if(StringUtils.hasText(principal.getName()) && !principal.getName().equals(accountId)) {
+			return new ResponseEntity<Map<String,Long>>(HttpStatus.BAD_REQUEST);
+		}
+		logger.info("Fetching statistics for account: {}", accountId);
+		Map<String, Long> result = iStatisticService.getStatistic(accountId);
+		
+		return new ResponseEntity<Map<String,Long>>(result, HttpStatus.OK);
+	}
+	
 }
