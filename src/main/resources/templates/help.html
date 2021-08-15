@@ -9,7 +9,109 @@
 <body>
 	<h1> <span th:text="${applicationName}">applicationName</span></h1>
 	<p>Instructions of installation/run and usage</p>
+	
+	<div style="margin-left:40px">
+		<a href="#account">Create account</a><br/>
+		<a href="#register">Register URL</a><br/>
+		<a href="#statistics">Statistics</a><br/>
+		<a href="#redirect">Redirect</a>
+	</div>
+	
+	<h2>Prerequisites</h2>
 	<hr/>
-	<h2>Install and run</h2>
+	<ul>
+	  <li>Java version 11.0.2</li>
+	  <li>Apache Maven 3.6.2</li>
+	</ul>
+	<h2>Installation/Run</h2>
+	<hr/>
+	<p>git clone https://github.com/dagajic/URL_Shortener.git</p>
+	<p>cd URL_Shortener</p>
+	<p>mvn clean install</p>
+	<p>mvn spring-boot:run</p>
+	
+	<h2>Usage</h2>
+	<hr/>
+	<p>Access API endpoints at http://localhost:8080</p>
+	<p>Help page URI: <span style="color:blue">/view/help</span></p>
+	<p>Request type for all endpoints is application/json.</p>
+	<div id="account" class="marked">
+		<h2>Create account (POST)</h2>
+		<p>URI: <span style="color:blue">/api/account</span></p>
+		<p class="subtitle">Request body:</p>
+		<ul>
+			<li>AccountId (String, mandatory)</li>
+		</ul>
+		<p>Example:</p>
+		<p class="code">{</p>
+			<div class="code-retracted">
+				<p class="code">"AccountId": "accountId"</p>
+			</div>		
+		<p class="code">}</p>
+		<p class="subtitle">Response:</p>
+		<ul>
+			<li>success: true | false</li>
+			<li>description: Status description</li>
+			<li>password: generated password</li>
+		</ul>
+		<p>Example:</p>
+		<p class="code">{</p>
+			<div class="code-retracted">
+				<p class="code">"success": true,</p>
+				<p class="code">"description": "Your account is opened",</p>
+				<p class="code">"password": "gIV1gNgl"</p>	
+			</div>			
+		<p class="code">}</p>
+	</div>
+	
+	<div id="register" class="marked">
+		<h2>URLs Registration (POST)</h2>
+		<p>URI: <span style="color:blue">/api/register</span></p>
+		<p>Request Header: Authorisation (Basic Auth) - accountId and password are required</p>
+		<p class="subtitle">Request body:</p>
+		<ul>
+			<li>URL (mandatory, URL that needs to be shortened)</li>
+			<li>redirectType : 301 | 302 (optional, default 302)</li>
+		</ul>
+		<p>Example:</p>
+		<p class="code">{</p>
+			<div class="code-retracted">
+				<p class="code">""URL": "http://stackoverflow.com/questions/1567929/website-safe-data-access-architecture-question?rq=1",</p>
+				<p class="code">"redirectType": 302</p>	
+			</div>			
+		<p class="code">}</p>
+		<p class="subtitle">Response:</p>
+		<ul>
+			<li>shortUrl</li>
+		</ul>
+		<p>Example:</p>
+		<p class="code">{</p>
+			<div class="code-retracted">
+				<p class="code">"shortUrl": "http://localhost:8080/9NB"</p>	
+			</div>			
+		<p class="code">}</p>
+	</div>
+	
+	<div id="statistics" class="marked">
+		<h2>Statistics (GET)</h2>
+		<p>URI: <span style="color:blue">/api/statistic/{accountId}</span></p>
+		<p>Request Header: Authorisation (Basic Auth) - accountId and password are required</p>
+		
+		<p class="subtitle">Response:</p>
+		<p>The server responds with JSON object (key:value map) where the key is the registered URL, 
+			and the value is the number of calls to that URL.</p>
+		<p>Example:</p>
+		<p class="code">{</p>
+			<div class="code-retracted">
+				<p class="code">"http://myweb.com/something1/somethingelse1/": 10,</p>	
+				<p class="code">"http:// myweb.com/something2/somethingelse2/": 4,</p>	
+				<p class="code">"http:// myweb.com/something3/somethingelse3/": 91,</p>	
+			</div>			
+		<p class="code">}</p>
+	</div>
+	<div id="redirect" class="marked">
+		<h2>Redirect</h2>
+		<p>Enter given short URL in your browser for redirect to original (registered) URL</p>
+	</div>
 </body>
 </html>

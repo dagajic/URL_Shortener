@@ -3,10 +3,36 @@
 h1{
   font-weight:500;
   color:#2C3E50;
+  padding-left:30px;
 }
 
 h2{
   font-weight:200;
   padding-left:30px;
   color:#808B96;
+}
+
+p{
+	padding-left:30px;
+}
+
+.code{
+	font-family: Consolas,monaco,monospace;
+	font-size: 14px;
+	color:#BA4A00;
+}
+
+
+.subtitle{
+	font-size: 18px;
+	font-style: italic;
+}
+
+.marked{
+	background-color: #F2F3F4;
+	border-radius: 10px;
+}
+
+.code-retracted{
+	padding-left: 20px;
 }
