@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.shortener.urlshortener.entity.Account;
@@ -18,6 +19,9 @@ public class AccountCreationServiceImpl implements AccountCreationService{
 	
 	@Autowired
 	private AccountRepository accountRepository;
+	
+	@Autowired
+	private PasswordEncoder iPasswordEncoder;
 
 	@Override
 	public String createAccount(String accountId) {
@@ -28,7 +32,7 @@ public class AccountCreationServiceImpl implements AccountCreationService{
 		}
 		// generate password and save
 		String password = RandomStringUtils.randomAlphanumeric(8);
-		accountRepository.save(new Account(accountId, password));
+		accountRepository.save(new Account(accountId, iPasswordEncoder.encode(password)));
 		return password;
 	}
 
